@@ -1,0 +1,30 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "users": [
+        {
+          "id": 1,
+          "name": "Andrea"
+        },
+        {
+          "id": 2,
+          "name": "Gianni"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "users": [
+        {
+          "id": 3,
+          "name": "Carlo"
+        },
+        {
+          "id": 4,
+          "name": "Luca"
+        }
+      ]
+    }
+  ]
+}

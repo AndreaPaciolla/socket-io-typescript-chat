@@ -8,6 +8,7 @@ import { User } from './shared/model/user';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
+import {ActivatedRoute} from "@angular/router";
 
 
 const AVATAR_URL = 'https://api.adorable.io/avatars/285';
@@ -39,7 +40,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatListItem, { read: ElementRef }) matListItems: QueryList<MatListItem>;
 
   constructor(private socketService: SocketService,
-    public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -129,10 +131,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.socketService.send({
+    const msg: Message = {
+      room: (this.activatedRoute.snapshot.params as any).roomId,
       from: this.user,
       content: message
-    });
+    };
+    this.socketService.send(msg);
+    console.log('Sending message:', msg)
     this.messageContent = null;
   }
 
