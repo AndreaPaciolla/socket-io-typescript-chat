@@ -17,26 +17,35 @@ export class AppComponent implements OnInit {
           users: [
             {
               id: 1,
+              username: 'apacho',
               name: 'Andrea'
             },
             {
               id: 2,
-              name: 'Gianni'
+              name: 'Gianni',
+              username: 'fgianni'
             }
           ]
         },
         {
           id: 2,
-          label: 'Luca',
+          label: 'Luca, Battista',
           url: '/chat/2',
           users: [
             {
-              id: 3,
+              id: 1,
+              username: 'apacho',
               name: 'Andrea'
             },
             {
-              id: 4,
+              id: 3,
+              username: 'lsciuti',
               name: 'Luca'
+            },
+            {
+              id: 4,
+              username: 'battuo',
+              name: 'Battista'
             }
           ]
         }

@@ -15,6 +15,9 @@ export class SocketService {
     public initSocket(): void {
         this.socket = socketIo(SERVER_URL);
     }
+    public joinRoom(room: number): void {
+      this.socket.emit('room', room);
+    }
 
     public send(message: Message): void {
         this.socket.emit('message', message);

@@ -5,5 +5,5 @@ export interface Message {
     from?: User;
     content?: any;
     action?: Action;
-    room?: string;
+    room?: number;
 }

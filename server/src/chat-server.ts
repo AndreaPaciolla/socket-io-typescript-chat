@@ -11,6 +11,50 @@ export class ChatServer {
     private io: SocketIO.Server;
     private port: string | number;
 
+    private rooms = [
+        {
+            id: 1,
+            label: 'Gianni',
+            url: '/chat/1',
+            users: [
+                {
+                    id: 1,
+                    username: 'apacho',
+                    name: 'Andrea'
+                },
+                {
+                    id: 2,
+                    name: 'Gianni',
+                    username: 'fgianni'
+                }
+            ]
+        },
+        {
+            id: 2,
+            label: 'Luca, Battista',
+            url: '/chat/2',
+            users: [
+                {
+                    id: 1,
+                    username: 'apacho',
+                    name: 'Andrea'
+                },
+                {
+                    id: 3,
+                    username: 'lsciuti',
+                    name: 'Luca'
+                },
+                {
+                    id: 4,
+                    username: 'battuo',
+                    name: 'Battista'
+                }
+            ]
+        }
+    ];
+
+    private connectedUsers = [];
+
     constructor() {
         this.createApp();
         this.config();
@@ -41,10 +85,17 @@ export class ChatServer {
         });
 
         this.io.on('connect', (socket: any) => {
-            console.log('Connected client on port %s.', this.port);
+            console.log('Connected client on port %s', this.port);
+
             socket.on('message', (m: Message) => {
                 console.log('[server](message): %s', JSON.stringify(m));
-                this.io.emit('message', m);
+                this.io.in(m.room.toString()).emit('message', m);
+                //this.io.emit('message', m);
+            });
+
+            socket.on('room', (room: number) => {
+                console.log('[server](room): %s', JSON.stringify(room));
+                socket.join(room);
             });
 
             socket.on('disconnect', () => {

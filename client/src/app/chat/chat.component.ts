@@ -32,6 +32,53 @@ export class ChatComponent implements OnInit, AfterViewInit {
       dialogType: DialogUserType.NEW
     }
   };
+  currentUser: User = {
+    id: 1,
+    name: 'Andrea',
+    username: 'apacho',
+    avatar: ''
+  };
+  rooms = [
+    {
+      id: 1,
+      label: 'Gianni',
+      url: '/chat/1',
+      users: [
+        {
+          id: 1,
+          username: 'apacho',
+          name: 'Andrea'
+        },
+        {
+          id: 2,
+          name: 'Gianni',
+          username: 'fgianni'
+        }
+      ]
+    },
+    {
+      id: 2,
+      label: 'Luca, Battista',
+      url: '/chat/2',
+      users: [
+        {
+          id: 1,
+          username: 'apacho',
+          name: 'Andrea'
+        },
+        {
+          id: 3,
+          username: 'lsciuti',
+          name: 'Luca'
+        },
+        {
+          id: 4,
+          username: 'battuo',
+          name: 'Battista'
+        }
+      ]
+    }
+  ];
 
   // getting a reference to the overall list, which is the parent container of the list items
   @ViewChild(MatList, { read: ElementRef }) matList: ElementRef;
@@ -87,6 +134,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.socketService.onEvent(Event.CONNECT)
       .subscribe(() => {
         console.log('connected');
+
+        this.rooms.forEach( (room) => {
+          console.log('Joining room %s', room);
+          this.socketService.joinRoom(room.id)
+        });
+
       });
 
     this.socketService.onEvent(Event.DISCONNECT)
